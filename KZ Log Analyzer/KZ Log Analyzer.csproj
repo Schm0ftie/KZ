@@ -36,12 +36,16 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DataHolder.cs" />
     <Compile Include="Jump.cs" />
     <Compile Include="LogReader.cs" />
     <Compile Include="Strafe.cs" />
+    <Compile Include="XmlHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
