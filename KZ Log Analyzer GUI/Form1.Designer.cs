@@ -42,9 +42,10 @@
             // 
             // ButtonStart
             // 
-            this.ButtonStart.Location = new System.Drawing.Point(94, 40);
+            this.ButtonStart.Location = new System.Drawing.Point(141, 62);
+            this.ButtonStart.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ButtonStart.Name = "ButtonStart";
-            this.ButtonStart.Size = new System.Drawing.Size(75, 23);
+            this.ButtonStart.Size = new System.Drawing.Size(112, 35);
             this.ButtonStart.TabIndex = 0;
             this.ButtonStart.Text = "Start";
             this.ButtonStart.UseVisualStyleBackColor = true;
@@ -52,16 +53,18 @@
             // 
             // TextBoxPath
             // 
-            this.TextBoxPath.Location = new System.Drawing.Point(13, 14);
+            this.TextBoxPath.Location = new System.Drawing.Point(20, 22);
+            this.TextBoxPath.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.TextBoxPath.Name = "TextBoxPath";
-            this.TextBoxPath.Size = new System.Drawing.Size(287, 20);
+            this.TextBoxPath.Size = new System.Drawing.Size(428, 26);
             this.TextBoxPath.TabIndex = 1;
             // 
             // ButtonSelect
             // 
-            this.ButtonSelect.Location = new System.Drawing.Point(13, 40);
+            this.ButtonSelect.Location = new System.Drawing.Point(20, 62);
+            this.ButtonSelect.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ButtonSelect.Name = "ButtonSelect";
-            this.ButtonSelect.Size = new System.Drawing.Size(75, 23);
+            this.ButtonSelect.Size = new System.Drawing.Size(112, 35);
             this.ButtonSelect.TabIndex = 2;
             this.ButtonSelect.Text = "Browse";
             this.ButtonSelect.UseVisualStyleBackColor = true;
@@ -73,10 +76,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.DataGridJumps.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DataGridJumps.Location = new System.Drawing.Point(13, 178);
+            this.DataGridJumps.Location = new System.Drawing.Point(20, 274);
+            this.DataGridJumps.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.DataGridJumps.Name = "DataGridJumps";
             this.DataGridJumps.ReadOnly = true;
-            this.DataGridJumps.Size = new System.Drawing.Size(615, 385);
+            this.DataGridJumps.Size = new System.Drawing.Size(922, 592);
             this.DataGridJumps.TabIndex = 3;
             this.DataGridJumps.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridJumps_RowHeaderMouseClick);
             // 
@@ -86,9 +90,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.DataGridDetails.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DataGridDetails.Location = new System.Drawing.Point(6, 19);
+            this.DataGridDetails.Location = new System.Drawing.Point(9, 29);
+            this.DataGridDetails.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.DataGridDetails.Name = "DataGridDetails";
-            this.DataGridDetails.Size = new System.Drawing.Size(309, 139);
+            this.DataGridDetails.Size = new System.Drawing.Size(464, 214);
             this.DataGridDetails.TabIndex = 4;
             // 
             // groupBox1
@@ -96,9 +101,11 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.DataGridDetails);
-            this.groupBox1.Location = new System.Drawing.Point(306, 12);
+            this.groupBox1.Location = new System.Drawing.Point(459, 18);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(321, 164);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox1.Size = new System.Drawing.Size(482, 252);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Details";
@@ -115,7 +122,7 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(640, 575);
             this.Controls.Add(this.ButtonExportXML);
@@ -124,6 +131,7 @@
             this.Controls.Add(this.ButtonSelect);
             this.Controls.Add(this.TextBoxPath);
             this.Controls.Add(this.ButtonStart);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Form1";
             this.Text = "form1";
             this.Load += new System.EventHandler(this.Form1_Load);

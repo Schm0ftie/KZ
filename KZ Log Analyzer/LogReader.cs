@@ -25,8 +25,8 @@ namespace KZLogAnalyzer.Data
                 {
                     Match matchJump = RegJumpInfo.Match(line);
                     if (matchJump.Success)
-                    {
                         oJump = new Jump((JumpType)Enum.Parse(typeof(JumpType), matchJump.Groups[3].Value));
+                        oJump.PlayerName = matchJump.Groups[1].Value;
                         oJump.Distance = float.Parse(matchJump.Groups[2].Value, CultureInfo.InvariantCulture);
                         oJump.StrafeCount = Int32.Parse(matchJump.Groups[4].Value, CultureInfo.InvariantCulture);
                         oJump.Pre = float.Parse(matchJump.Groups[5].Value, CultureInfo.InvariantCulture);
@@ -72,7 +72,7 @@ namespace KZLogAnalyzer.Data
 
                     }
                 }
-            }
+            
             return oJumpList;
         }
 

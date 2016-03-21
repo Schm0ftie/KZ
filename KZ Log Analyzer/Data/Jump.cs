@@ -10,7 +10,7 @@ namespace KZLogAnalyzer.Data
 
     public class Jump
     {
-       
+        public string PlayerName { get; set; }
 
         public float Pre { get; set; }
         public float Height { get; set; }

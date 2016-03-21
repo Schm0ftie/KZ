@@ -39,6 +39,7 @@ namespace KZLogAnalyzer
         {
             XElement oXElement = new XElement(
                 oJump.JumpType.ToString(),
+                new XAttribute("PlayerName", oJump.PlayerName),
                 new XAttribute("Distance", oJump.Distance),
                 new XAttribute("Pre", oJump.Pre),
                 new XAttribute("Max", oJump.Max),

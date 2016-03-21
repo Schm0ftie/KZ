@@ -12,6 +12,8 @@ namespace KZLogAnalyzer.Data
     {
         private List<Jump> ParsedJumps { get; set; }
         private XmlHandler oXmlHandler;
+        private Jump SelectedJump, CompareJump;
+        
 
         public DataHolder(List<Jump> oJumpList)
         {
@@ -29,6 +31,16 @@ namespace KZLogAnalyzer.Data
             }
 
             oXmlHandler.Save(ParsedJumps, oFileInfo.FullName);
+        }
+
+        public void SetSelectedJump(Jump oJump)
+        {
+            SelectedJump = oJump;
+        }
+
+        public void SetComparedJump(Jump oJump)
+        {
+            CompareJump = oJump;
         }
     }
 }
