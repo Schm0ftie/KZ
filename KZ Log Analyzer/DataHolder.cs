@@ -13,9 +13,10 @@ namespace KZLogAnalyzer.Data
         private List<Jump> ParsedJumps { get; set; }
         private XmlHandler oXmlHandler;
 
-        public DataHolder()
+        public DataHolder(List<Jump> oJumpList)
         {
             oXmlHandler = new XmlHandler();
+            ParsedJumps = oJumpList;
         }
 
         public void Save(string path)

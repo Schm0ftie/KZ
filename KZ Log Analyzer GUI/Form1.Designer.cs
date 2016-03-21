@@ -34,6 +34,7 @@
             this.DataGridJumps = new System.Windows.Forms.DataGridView();
             this.DataGridDetails = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ButtonExportXML = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridJumps)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridDetails)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -102,11 +103,22 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Details";
             // 
+            // ButtonExportXML
+            // 
+            this.ButtonExportXML.Location = new System.Drawing.Point(176, 39);
+            this.ButtonExportXML.Name = "ButtonExportXML";
+            this.ButtonExportXML.Size = new System.Drawing.Size(75, 23);
+            this.ButtonExportXML.TabIndex = 6;
+            this.ButtonExportXML.Text = "Export XML";
+            this.ButtonExportXML.UseVisualStyleBackColor = true;
+            this.ButtonExportXML.Click += new System.EventHandler(this.ButtonExportXML_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(640, 575);
+            this.Controls.Add(this.ButtonExportXML);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.DataGridJumps);
             this.Controls.Add(this.ButtonSelect);
@@ -131,6 +143,7 @@
         private System.Windows.Forms.DataGridView DataGridJumps;
         private System.Windows.Forms.DataGridView DataGridDetails;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button ButtonExportXML;
     }
 }
 

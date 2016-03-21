@@ -17,6 +17,7 @@ namespace KZLogAnalyzer.GUI
         private int BuildNr = 1;
         private LogReader Reader;
         private List<Jump> Jumps;
+        private DataHolder DHolder;
 
         public Form1()
         {
@@ -35,6 +36,7 @@ namespace KZLogAnalyzer.GUI
                 return;
             Reader = new LogReader();
             Jumps = Reader.ReadLog(TextBoxPath.Text);
+            DHolder = new DataHolder(Jumps);
             DataGridJumps.DataSource = Jumps;
             
             
@@ -55,6 +57,11 @@ namespace KZLogAnalyzer.GUI
         private void DataGridJumps_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             DataGridDetails.DataSource = Jumps.Count > e.RowIndex && e.RowIndex >= 0 ? Jumps[e.RowIndex].Strafes : null;
+        }
+
+        private void ButtonExportXML_Click(object sender, EventArgs e)
+        {
+            DHolder.Save("..\\test.xml");
         }
     }
 }

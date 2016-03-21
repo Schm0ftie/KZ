@@ -75,5 +75,7 @@ namespace KZLogAnalyzer.Data
             }
             return oJumpList;
         }
+
+        //schm0ftie finished with a TP TIME of (08:55.50, TP's: 100). [rank #108/197 | record 02:46.64]
     }
 }

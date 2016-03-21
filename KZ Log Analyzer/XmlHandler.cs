@@ -20,10 +20,12 @@ namespace KZLogAnalyzer
         {
             FileInfo oFileInfo = new FileInfo(path);
             XDocument oXDocument = new XDocument();
+            XElement oXElementRoot = new XElement("Jumps");
             foreach (Jump oJump in oJumpList)
             {
-               oXDocument.Add(ToXElement(oJump));
+               oXElementRoot.Add(ToXElement(oJump));
             }
+            oXDocument.Add(oXElementRoot);
             oXDocument.Save(oFileInfo.FullName);
 
         }
