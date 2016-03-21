@@ -37,9 +37,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DataHolder.cs" />
-    <Compile Include="Jump.cs" />
+    <Compile Include="Data\Jump.cs" />
+    <Compile Include="Data\KZRun.cs" />
     <Compile Include="LogReader.cs" />
-    <Compile Include="Strafe.cs" />
+    <Compile Include="Data\Map.cs" />
+    <Compile Include="Data\Server.cs" />
+    <Compile Include="Data\Strafe.cs" />
     <Compile Include="XmlHandler.cs" />
   </ItemGroup>
   <ItemGroup>

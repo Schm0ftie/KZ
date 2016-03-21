@@ -56,5 +56,10 @@ namespace KZLogAnalyzer.GUI
         {
             DataGridDetails.DataSource = Jumps.Count > e.RowIndex && e.RowIndex >= 0 ? Jumps[e.RowIndex].Strafes : null;
         }
+
+        private void ButtonSave_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
