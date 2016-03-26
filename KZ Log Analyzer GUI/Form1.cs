@@ -15,14 +15,15 @@ namespace KZLogAnalyzer.GUI
     {
         private string VersionNr = "0.1";
         private int BuildNr = 1;
-        private LogReader Reader;
-        private List<Jump> Jumps;
-        private DataHolder DHolder;
+        private DataContainer DHolder;
 
         public Form1()
         {
             InitializeComponent();
             this.Text = "KZ Log Analyzer GUI - v." + VersionNr;
+            DHolder = new DataContainer();
+            DHolder.LoadData();
+            //GridViewCoreJumps.DataSource = DHolder.GetJumpList(DHolder.CoreList);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -34,10 +35,8 @@ namespace KZLogAnalyzer.GUI
         {
             if (TextBoxPath.Text == String.Empty)
                 return;
-            Reader = new LogReader();
-            Jumps = Reader.ReadLog(TextBoxPath.Text);
-            DHolder = new DataHolder(Jumps);
-            DataGridJumps.DataSource = Jumps;
+            DHolder.LoadLog(TextBoxPath.Text);
+            DataGridJumps.DataSource = DHolder.ParsedList;
             
             
         }
@@ -56,12 +55,22 @@ namespace KZLogAnalyzer.GUI
 
         private void DataGridJumps_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            DataGridDetails.DataSource = Jumps.Count > e.RowIndex && e.RowIndex >= 0 ? Jumps[e.RowIndex].Strafes : null;
+            DataGridDetails.DataSource = DHolder.ParsedList.Count > e.RowIndex && e.RowIndex >= 0 ? DHolder.ParsedList[e.RowIndex].Maps : null;
         }
 
         private void ButtonExportXML_Click(object sender, EventArgs e)
         {
-            DHolder.Save("..\\test.xml");
+            DHolder.Save("..\\data.xml");
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //string test = DHolder.GetPlayerName(DHolder.ParsedList);
         }
     }
 }
