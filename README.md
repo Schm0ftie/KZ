@@ -18,8 +18,23 @@ KZ Log Analyzer is a tool to process kz related informations from log files gene
 * Add the "-condebug" as start parameter
 * Save by clicking on "OK"
 
+__NOTE: CSGO does only append to the console.log file, it never erases it. While using *-condebug* the log file will increase in size if not manually deleted or by removing the *-condebug* parameter__
+
 ### KZ Log Analyzer GUI
-* Click on "Browse" to select your log file
+####Import Tab
+* Click on "Open" to select your log file
   * *-condebug* stores the log in *..\Counter-Strike Global Offensive\csgo* folder as __console.log__
-* Click on "Start" to parse the selected log file
-* Select a row (click on left side of the row outside of the data) to view detailed strafe information for that jump
+* Filters
+  * __Tickrate__ -  filter to only select jumps based on tickrate
+  * __Jump Filter__ - filter to only selected jump types
+  * __Use Min. Distance__ - NYI (Not yet implemented)
+  * __Names__ - filter jumps by player name
+* Click on "Import" to import the jumps into the permanent data storage using the selected filters. __Important: The log file used for that import will be automaticly deleted on import!__
+ 
+####Jumps Tab
+* Left/Right click on a jump in the listing to get strafe details in left/right detail view
+* Filters
+  * __Tickrate__ - display only jumps based on the choosen tickrate (influences personal best view)
+  * __Jumptype__ - display only jumps based on the choosen type
+* Personal Best
+  * Displays your personal best stats for all jumps based on the current selected tickrate (see Filters -> Tickrate)
