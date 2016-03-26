@@ -1,0 +1,173 @@
+﻿<Window x:Class="KZ_Log_Analyzer_GUI_WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KZ_Log_Analyzer_GUI_WPF"
+        mc:Ignorable="d"
+        Title="KZ Log Analyzer GUI - v.0.2" Height="435" Width="886" MinWidth="886" MaxWidth="886"  MinHeight="435">
+    <Window.Resources>
+        <CollectionViewSource x:Key="ItemCollectionViewSourceImport" CollectionViewType="ListCollectionView"></CollectionViewSource>
+        <CollectionViewSource x:Key="ItemCollectionViewSourceJumps" CollectionViewType="ListCollectionView"></CollectionViewSource>
+        <CollectionViewSource x:Key="ItemCollectionViewSourceStrafe1" CollectionViewType="ListCollectionView"></CollectionViewSource>
+        <CollectionViewSource x:Key="ItemCollectionViewSourceStrafe2" CollectionViewType="ListCollectionView"></CollectionViewSource>
+    </Window.Resources>
+    <Grid>
+        <TabControl x:Name="tabControl" Margin="12,10,10,16" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Visible">
+            <TabItem Header="Import">
+                <Grid Background="#FFE5E5E5" Margin="0,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="178"/>
+                        <ColumnDefinition Width="Auto" MinWidth="49"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" x:Name="ButtonOpen" Content="Open" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="20" Click="ButtonOpen_Click"/>
+                    <Button Grid.Column="0" x:Name="ButtonImport" Content="Import" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="75" Height="20" Click="ButtonImport_Click"/>
+                    <GroupBox Grid.Column="0" x:Name="GroupBoxTickrate" Header="Tickrate" HorizontalAlignment="Left" VerticalAlignment="Top" Width="155" Height="50" Margin="10,35,0,0">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <CheckBox x:Name="CheckBoxTickrate64" Content="64" Margin="5px" Checked="CheckBoxTickrate_Checked" Unchecked="CheckBoxTickrate_Checked" IsChecked="True"/>
+                            <CheckBox x:Name="CheckBoxTickrate102" Content="102"  Margin="5px" Checked="CheckBoxTickrate_Checked" Unchecked="CheckBoxTickrate_Checked" IsChecked="True"/>
+                            <CheckBox x:Name="CheckBoxTickrate128" Content="128" Margin="5px" Checked="CheckBoxTickrate_Checked" Unchecked="CheckBoxTickrate_Checked" IsChecked="True"/>
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Grid.Column="0" x:Name="GroupBoxJumps" Header="Jump Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Width="155" Height="146" RenderTransformOrigin="0.5,0.5" Margin="10,90,0,0">
+                        <StackPanel>
+                            <CheckBox x:Name="CheckBoxJumpFilterLJ" Content="Longjump" Margin="10,2,0,0" Checked="CheckBoxJumpFilter" Unchecked="CheckBoxJumpFilter" IsChecked="True"/>
+                            <CheckBox x:Name="CheckBoxJumpFilterBhop" Content="Bunnyhop" Margin="10,2,0,0" Checked="CheckBoxJumpFilter" Unchecked="CheckBoxJumpFilter" IsChecked="True" />
+                            <CheckBox x:Name="CheckBoxJumpFilterMbhop" Content="MultiBhop" Margin="10,2,0,0" Checked="CheckBoxJumpFilter" Unchecked="CheckBoxJumpFilter" IsChecked="True" />
+                            <CheckBox x:Name="CheckBoxJumpFilterDJ" Content="DropBhop" Margin="10,2,0,0" Checked="CheckBoxJumpFilter" Unchecked="CheckBoxJumpFilter" IsChecked="True"/>
+                            <CheckBox x:Name="CheckBoxJumpFilterWJ" Content="WeirdJump" Margin="10,2,0,0" Checked="CheckBoxJumpFilter" Unchecked="CheckBoxJumpFilter" IsChecked="True" />
+                            <CheckBox x:Name="CheckBoxJumpFilterCJ" Content="CountJump" Margin="10,2,0,0" Checked="CheckBoxJumpFilter" Unchecked="CheckBoxJumpFilter" IsChecked="True"/>
+                            <CheckBox x:Name="CheckBoxJumpFilterLAJ" Content="LadderJump" Margin="10,2,0,0" Checked="CheckBoxJumpFilter" Unchecked="CheckBoxJumpFilter" IsChecked="True" />
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Grid.Column="0" x:Name="GroupBoxMisc" Header="Misc. Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Width="155" Height="69" RenderTransformOrigin="0.5,0.5" Margin="10,241,0,0">
+                        <StackPanel>
+                            <CheckBox x:Name="CheckBoxIgnoreShort" Content="Use Min. Distance" Margin="10,2,0,0" Checked="CheckBoxJumpFilter" Unchecked="CheckBoxJumpFilter"/>
+                            <ComboBox x:Name="ComboBoxPlayNames" Margin="10,2,0,0" SelectionChanged="ComboBoxPlayNames_SelectionChanged"/>
+                        </StackPanel>
+                    </GroupBox>
+                    <DataGrid Grid.Column="1" x:Name="DataGridImport" DataContext="{StaticResource ItemCollectionViewSourceImport}" ItemsSource="{Binding}" CanUserAddRows="False" CanUserDeleteRows="False" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="10,0,0,0" AutoGenerateColumns="False" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="JumpType" Width="75" Binding="{Binding JumpType}" />
+                            <DataGridTextColumn Header="PlayerName" Width="75" Binding="{Binding PlayerName}" />
+                            <DataGridTextColumn Header="Distance" Width="60" Binding="{Binding Distance}" />
+                            <DataGridTextColumn Header="Pre" Width="50" Binding="{Binding Pre, StringFormat={}{0:N1}}" />
+                            <DataGridTextColumn Header="Max" Width="50" Binding="{Binding Max}" />
+                            <DataGridTextColumn Header="#Strafes" Width="60" Binding="{Binding StrafeCount}" />
+                            <DataGridTextColumn Header="Height" Width="50" Binding="{Binding Height}" />
+                            <DataGridTextColumn Header="Sync" Width="45" Binding="{Binding Sync, StringFormat={}{0:N2}%}" />
+                            <DataGridCheckBoxColumn Header="CJ" Width="25" Binding="{Binding CrouchJump}" />
+                            <DataGridCheckBoxColumn Header="FW" Width="30" Binding="{Binding Forward}" />
+                            <DataGridTextColumn Header="Edge" Width="50" Binding="{Binding JumpOfEdge}" />
+                            <DataGridTextColumn Header="Block" Width="40" Binding="{Binding Block}" />
+                            <DataGridTextColumn Header="Bhops" Width="45" Binding="{Binding Bhops}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Jumps" ScrollViewer.CanContentScroll="True">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition Width="Auto" MinWidth="638" />
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="DataGridJumps" DataContext="{StaticResource ItemCollectionViewSourceJumps}" ItemsSource="{Binding}"  Width="Auto" CanUserAddRows="False" CanUserDeleteRows="False" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="10,174,54,6" AutoGenerateColumns="False" Grid.Column="1" MouseLeftButtonUp="DataGridJumps_MouseLeftButtonUp" MouseRightButtonUp="DataGridJumps_MouseRightButtonUp" VerticalScrollBarVisibility="Visible" IsReadOnly="True" >
+                        <DataGrid.Columns>
+                            <!--<DataGridTextColumn Header="JumpType" Width="75" Binding="{Binding JumpType}" /> -->
+                            <!--<DataGridTextColumn Header="PlayerName" Width="75" Binding="{Binding PlayerName}" />-->
+                            <DataGridTextColumn Header="Distance" Width="65" Binding="{Binding Distance}" />
+                            <DataGridTextColumn Header="Pre" Width="55" Binding="{Binding Pre, StringFormat={}{0:N1}}" />
+                            <DataGridTextColumn Header="Max" Width="55" Binding="{Binding Max}" />
+                            <DataGridTextColumn Header="#Strafes" Width="60" Binding="{Binding StrafeCount}" />
+                            <DataGridTextColumn Header="Height" Width="50" Binding="{Binding Height}" />
+                            <DataGridTextColumn Header="Sync" Width="50" Binding="{Binding Sync, StringFormat={}{0:N2}%}" />
+                            <DataGridCheckBoxColumn Header="CJ" Width="30" Binding="{Binding CrouchJump}" />
+                            <DataGridCheckBoxColumn Header="FW" Width="30" Binding="{Binding Forward}" />
+                            <DataGridTextColumn Header="Edge" Width="60" Binding="{Binding JumpOfEdge}" />
+                            <DataGridTextColumn Header="Block" Width="50" Binding="{Binding Block}" />
+                            <DataGridTextColumn Header="Bhops" Width="50" Binding="{Binding Bhops}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <DataGrid Grid.Column="1" x:Name="DataGridDetail1" DataContext="{StaticResource ItemCollectionViewSourceStrafe1}" Width="Auto" ItemsSource="{Binding}" CanUserAddRows="False" CanUserDeleteRows="False" VerticalContentAlignment="Stretch" Margin="10,10,364,0" AutoGenerateColumns="False" VerticalScrollBarVisibility="Visible" HorizontalContentAlignment="Stretch" Height="159" VerticalAlignment="Top" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="#" Width="10" Binding="{Binding Nr}" />
+                            <DataGridTextColumn Header="Sync" Width="35" Binding="{Binding Sync, StringFormat={}{0:N0}%}" />
+                            <DataGridTextColumn Header="Gain" Width="50" Binding="{Binding Gain}" />
+                            <DataGridTextColumn Header="Lost" Width="50" Binding="{Binding Lost}" />
+                            <DataGridTextColumn Header="Max" Width="50" Binding="{Binding MaxSpeed}" />
+                            <DataGridTextColumn Header="Air" Width="38" Binding="{Binding AirTime}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <DataGrid Grid.Column="1" x:Name="DataGridDetail2" DataContext="{StaticResource ItemCollectionViewSourceStrafe2}"  Width="Auto" ItemsSource="{Binding}" CanUserAddRows="False" CanUserDeleteRows="False" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="319,10,54,0" AutoGenerateColumns="False" VerticalScrollBarVisibility="Visible" Height="159" VerticalAlignment="Top" IsReadOnly="True" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="#" Width="10" Binding="{Binding Nr}" />
+                            <DataGridTextColumn Header="Sync" Width="35" Binding="{Binding Sync, StringFormat={}{0:N0}%}" />
+                            <DataGridTextColumn Header="Gain" Width="50" Binding="{Binding Gain}" />
+                            <DataGridTextColumn Header="Lost" Width="50" Binding="{Binding Lost}" />
+                            <DataGridTextColumn Header="Max" Width="50" Binding="{Binding MaxSpeed}" />
+                            <DataGridTextColumn Header="Air" Width="38" Binding="{Binding AirTime}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <GroupBox x:Name="GroupBoxPB" Header="Personal Best" Margin="20,10,20,0" VerticalAlignment="Top" Height="236">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="90"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="27"/>
+                                <RowDefinition Height="27"/>
+                                <RowDefinition Height="27"/>
+                                <RowDefinition Height="27"/>
+                                <RowDefinition Height="27"/>
+                                <RowDefinition Height="27"/>
+                                <RowDefinition Height="27"/>
+                            </Grid.RowDefinitions>
+                            <Label  Content="Longjump:" Grid.Column="0" Grid.Row="0" Margin="5,0,0,0" HorizontalAlignment="Right"/>
+                            <Label  Content="BunnyHop:" Grid.Column="0" Grid.Row="1" Margin="5,0,0,0" HorizontalAlignment="Right"/>
+                            <Label  Content="MultiBhop:" Grid.Column="0" Grid.Row="2" Margin="5,0,0,0" HorizontalAlignment="Right"/>
+                            <Label  Content="DropBhop:" Grid.Column="0" Grid.Row="3" Margin="5,0,0,0" HorizontalAlignment="Right"/>
+                            <Label  Content="WeirdJump:" Grid.Column="0" Grid.Row="4" Margin="5,0,0,0" HorizontalAlignment="Right"/>
+                            <Label  Content="LadderJump:" Grid.Column="0" Grid.Row="5" Margin="5,0,0,0" HorizontalAlignment="Right"/>
+                            <Label  Content="CountJump:" Grid.Column="0" Grid.Row="6" Margin="5,0,0,0" HorizontalAlignment="Right"/>
+
+                            <Button x:Name="ButtonPbLJ" Content="N/A" Grid.Column="1" Grid.Row="0" Margin="5,1,5,1"/>
+                            <Button x:Name="ButtonPbBhop" Content="N/A" Grid.Column="1" Grid.Row="1" Margin="5,1,5,1"/>
+                            <Button x:Name="ButtonPbMbhop" Content="N/A" Grid.Column="1" Grid.Row="2" Margin="5,1,5,1"/>
+                            <Button x:Name="ButtonPbDbhop" Content="N/A" Grid.Column="1" Grid.Row="3" Margin="5,1,5,1"/>
+                            <Button x:Name="ButtonPbWJ" Content="N/A" Grid.Column="1" Grid.Row="4" Margin="5,1,5,1"/>
+                            <Button x:Name="ButtonPbLAJ" Content="N/A" Grid.Column="1" Grid.Row="5" Margin="5,1,5,1"/>
+                            <Button x:Name="ButtonPbCJ" Content="N/A" Grid.Column="1" Grid.Row="6" Margin="5,1,5,1"/>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox x:Name="GroupBoxJumpsFilter" Header="Filter" Margin="20,251,20,0" VerticalAlignment="Top" Height="89">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="90"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="32"/>
+                                <RowDefinition Height="32"/>
+                            </Grid.RowDefinitions>
+                            <Label  Content="Tickrate:" Grid.Column="0" Grid.Row="0" Margin="5,3,0,2"/>
+                            <ComboBox x:Name="ComboBoxJumpsFilterTickrate" Grid.Column="1" Grid.Row="0" Margin="5,5,5,5" SelectionChanged="ComboBoxJumpsFilterTickrate_SelectionChanged"/>
+
+
+                            <Label Content="Jumptype:" Grid.Column="0" Grid.Row="1" Margin="5,3,0,2"/>
+                            <ComboBox x:Name="ComboBoxJumpsFilterJumptype" Grid.Column="1" Grid.Row="1" Margin="5,5,5,5" SelectionChanged="ComboBoxJumpsFilter_SelectionChanged" />
+
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Maps">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Settings">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>
