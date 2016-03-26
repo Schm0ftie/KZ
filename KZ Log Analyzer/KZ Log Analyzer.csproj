@@ -36,9 +36,11 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DataHolder.cs" />
+    <Compile Include="DataContainer.cs" />
+    <Compile Include="DataProvider.cs" />
     <Compile Include="Data\Jump.cs" />
     <Compile Include="Data\KZRun.cs" />
+    <Compile Include="ImportFilter.cs" />
     <Compile Include="LogReader.cs" />
     <Compile Include="Data\Map.cs" />
     <Compile Include="Data\Server.cs" />

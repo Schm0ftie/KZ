@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using System.ComponentModel;
 
 namespace KZLogAnalyzer.Data
 {
     public enum JumpType { LongJump, Bhop, MultiBhop, DropBhop, WeirdJump, LadderJump, CountJump }
 
-    public class Jump
+    public class Jump 
     {
+
         public string PlayerName { get; set; }
 
         public float Pre { get; set; }
@@ -71,7 +74,7 @@ namespace KZLogAnalyzer.Data
 
         public List<Strafe> Strafes { get; set; }
 
-        public float JumpOffEdge { get; set; }
+        public float JumpOfEdge { get; set; }
 
         public bool CrouchJump { get; set; }
 
@@ -89,6 +92,31 @@ namespace KZLogAnalyzer.Data
            
         }
 
+        /// <summary>
+        /// Converts Jump to XElement
+        /// </summary>
+        /// <param name="oJump"></param>
+        /// <returns></returns>
+        public XElement ToXElement()
+        {
+            XElement oXElement = new XElement(
+                this.JumpType.ToString(),
+                new XAttribute("PlayerName", this.PlayerName),
+                new XAttribute("Distance", this.Distance),
+                new XAttribute("Pre", this.Pre),
+                new XAttribute("Max", this.Max),
+                new XAttribute("StrafeCount", this.StrafeCount),
+                new XAttribute("Height", this.Height),
+                new XAttribute("Sync", this.Sync),
+                new XAttribute("JumpOfEdge", this.JumpOfEdge),
+                new XAttribute("CrouchJump", this.CrouchJump),
+                new XAttribute("Forward", this.Forward),
+                new XAttribute("Bhops", this.Bhops),
+                new XAttribute("Block", this.Block));
+            oXElement.Add(XmlHandler.ToXElement(this.Strafes));
+
+            return oXElement;
+        }
 
     }
 }

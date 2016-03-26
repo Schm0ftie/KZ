@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using KZLogAnalyzer.Data;
 using System.Xml.Linq;
 using System.IO;
+using System.Globalization;
 
 namespace KZLogAnalyzer
 {
@@ -16,76 +17,129 @@ namespace KZLogAnalyzer
         /// </summary>
         /// <param name="oJumpList"></param>
         /// <param name="path"></param>
-        public void Save(List<Jump> oJumpList, string path)
+        public void Save(List<Server> oServers, string path)
         {
             FileInfo oFileInfo = new FileInfo(path);
             XDocument oXDocument = new XDocument();
-            XElement oXElementRoot = new XElement("Jumps");
-            foreach (Jump oJump in oJumpList)
+            XElement oXElementRoot = new XElement("Data");
+            foreach (Server oServer in oServers)
             {
-               oXElementRoot.Add(ToXElement(oJump));
+               oXElementRoot.Add(oServer.ToXElement());
             }
             oXDocument.Add(oXElementRoot);
             oXDocument.Save(oFileInfo.FullName);
 
         }
 
-        /// <summary>
-        /// Converts Jump to XElement
-        /// </summary>
-        /// <param name="oJump"></param>
-        /// <returns></returns>
-        private XElement ToXElement(Jump oJump)
-        {
-            XElement oXElement = new XElement(
-                oJump.JumpType.ToString(),
-                new XAttribute("PlayerName", oJump.PlayerName),
-                new XAttribute("Distance", oJump.Distance),
-                new XAttribute("Pre", oJump.Pre),
-                new XAttribute("Max", oJump.Max),
-                new XAttribute("StrafeCount", oJump.StrafeCount),
-                new XAttribute("Height", oJump.Height),
-                new XAttribute("Sync", oJump.Sync),
-                new XAttribute("JumpOfEdge", oJump.JumpOffEdge),
-                new XAttribute("CrouchJump", oJump.CrouchJump),
-                new XAttribute("Forward", oJump.Forward),
-                new XAttribute("Bhops", oJump.Bhops),
-                new XAttribute("Block", oJump.Block));
-            oXElement.Add(ToXElement(oJump.Strafes));
-            
-            return oXElement;
-        }
+
 
         /// <summary>
         /// COnverts List of Strafe to List of XElement
         /// </summary>
         /// <param name="oJumpStrafe"></param>
         /// <returns></returns>
-        private List<XElement> ToXElement(List<Strafe> oJumpStrafe)
+        public static List<XElement> ToXElement(List<Strafe> oJumpStrafe)
         {
             List<XElement> oXElementList = new List<XElement>();
             foreach (Strafe oStrafe in oJumpStrafe)
             {
-                oXElementList.Add(ToXElement(oStrafe));
+                oXElementList.Add(oStrafe.ToXElement());
             }
             return oXElementList;
         }
-        
-        /// <summary>
-        /// Converts a Strafe to XElement
-        /// </summary>
-        /// <param name="oStrafe"></param>
-        /// <returns></returns>
-        private XElement ToXElement(Strafe oStrafe)
+
+        public static List<XElement> ToXElement(List<KZRun> oKZRuns)
         {
-            XElement oXElement = new XElement("Strafe",
-                    new XAttribute("Nr", oStrafe.Nr),
-                    new XAttribute("Sync", oStrafe.Sync),
-                    new XAttribute("Gain", oStrafe.Gain),
-                    new XAttribute("Lost", oStrafe.Gain),
-                    new XAttribute("MaxSpeed", oStrafe.MaxSpeed),
-                    new XAttribute("AirTime", oStrafe.AirTime));
-            return oXElement;
-        } 
+            List<XElement> oXElementList = new List<XElement>();
+            foreach (KZRun oKZRun in oKZRuns)
+            {
+                oXElementList.Add(oKZRun.ToXElement());
+            }
+            return oXElementList;
+        }
+
+        public static List<XElement> ToXElement(List<Jump> oJumps)
+        {
+            List<XElement> oXElementList = new List<XElement>();
+            foreach (Jump oJump in oJumps)
+            {
+                oXElementList.Add(oJump.ToXElement());
+            }
+            return oXElementList;
+        }
+
+        public static List<XElement> ToXElement(List<Map> oMaps)
+        {
+            List<XElement> oXElementList = new List<XElement>();
+            foreach (Map oMap in oMaps)
+            {
+                oXElementList.Add(oMap.ToXElement());
+            }
+            return oXElementList;
+        }
+
+        public static List<XElement> ToXElement(List<Server> oServers)
+        {
+            List<XElement> oXElementList = new List<XElement>();
+            foreach (Server oServer in oServers)
+            {
+                oXElementList.Add(oServer.ToXElement());
+            }
+            return oXElementList;
+        }
+
+
+        public List<Server> Load(string path)
+        {
+            FileInfo oFileInfo = new FileInfo(path);
+            if (!oFileInfo.Exists)
+                return new List<Server>();
+
+           XDocument xDoc = XDocument.Load(path);
+            List<Server> oServerList = xDoc.Element("Data").Elements("Server").Select(s => new Server()
+            {
+                IP = s.Attribute("IP").Value,
+                Name = s.Attribute("Name").Value,
+                Tickrate = float.Parse(s.Attribute("Tickrate").Value, CultureInfo.InvariantCulture),
+                KZTimerVersion = s.Attribute("KZTimerVersion").Value,
+                Maps = s.Element("Maps").Elements().Select(m => new Map()
+                {
+                    Name = m.Attribute("Name").Value,
+                    WorkshopPreFix = m.Attribute("WorkshopPreFix").Value,
+                    Times = m.Element("Times").Elements().Select(r => new KZRun()
+                    {
+                        Typ = (KZTime)Enum.Parse(typeof(KZTime), r.Attribute("Typ").Value),
+                        Runner = r.Attribute("Runner").Value,
+                        TeleportCount = int.Parse(r.Attribute("TeleportCount").Value),
+                        Time = r.Attribute("Time").Value
+                    }).ToList(),
+
+                    Jumps = m.Element("Jumps").Elements().Select(j => new Jump((JumpType)Enum.Parse(typeof(JumpType), j.Name.ToString()))
+                    {
+                        PlayerName = j.Attribute("PlayerName").Value,
+                        Distance = float.Parse(j.Attribute("Distance").Value, CultureInfo.InvariantCulture),
+                        Pre = float.Parse(j.Attribute("Pre").Value, CultureInfo.InvariantCulture),
+                        Max = float.Parse(j.Attribute("Max").Value, CultureInfo.InvariantCulture),
+                        StrafeCount = int.Parse(j.Attribute("StrafeCount").Value, CultureInfo.InvariantCulture),
+                        Height = float.Parse(j.Attribute("Height").Value, CultureInfo.InvariantCulture),
+                        Sync = float.Parse(j.Attribute("Sync").Value, CultureInfo.InvariantCulture),
+                        JumpOfEdge = float.Parse(j.Attribute("JumpOfEdge").Value, CultureInfo.InvariantCulture),
+                        CrouchJump = bool.Parse(j.Attribute("CrouchJump").Value),
+                        Forward = bool.Parse(j.Attribute("Forward").Value),
+                        Bhops = int.Parse(j.Attribute("Bhops").Value, CultureInfo.InvariantCulture),
+                        Block = float.Parse(j.Attribute("Block").Value, CultureInfo.InvariantCulture),
+                        Strafes = j.Elements().Select(st => new Strafe(
+                            int.Parse(st.Attribute("Nr").Value),
+                            float.Parse(st.Attribute("Sync").Value),
+                            float.Parse(st.Attribute("Gain").Value),
+                            float.Parse(st.Attribute("Lost").Value),
+                            float.Parse(st.Attribute("MaxSpeed").Value),
+                            float.Parse(st.Attribute("AirTime").Value)))
+                        .ToList()
+                    }).ToList()
+                }).ToList()
+            }).ToList();
+            return oServerList;
+        }
     }
 }
